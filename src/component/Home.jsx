@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 const Home = (props) => {
-  const [employeeData, setEmployeeData] = useState([
+  console.log(props.history.location.newData);
+
+  let testData = props.history.location.newData ? props.history.location.newData : [
     {
       id: 1,
       fname: "Gaurav",
       lName: "khandelwal",
-      dob: "01/01/01",
+      dob: "2022/01/01",
       designation: "engineer",
       pLink: "xyz",
       experience: "software",
@@ -16,7 +17,7 @@ const Home = (props) => {
       id: 2,
       fname: "Ram",
       lName: "Sharma",
-      dob: "01/01/01",
+      dob: "2022/01/01",
       designation: "doctor",
       pLink: "xyz",
       experience: "lungs",
@@ -25,12 +26,14 @@ const Home = (props) => {
       id: 3,
       fname: "Karan",
       lName: "Sharma",
-      dob: "01/01/01",
+      dob: "2022/01/01",
       designation: "doctor",
       pLink: "xyz",
       experience: "lungs",
     },
-  ]);
+  ];
+  const [employeeData, setEmployeeData] = useState([...testData]);
+
   return (
     <div>
       <table>
@@ -58,6 +61,13 @@ const Home = (props) => {
                 <button
                   className="btn btn-primary"
                   style={{ marginRight: "5px" }}
+                  onClick={() => {
+                    props.history.push({
+                      pathname: "/edit",
+                      eId : employee.id,
+                      employeeData
+                    });
+                  }}
                 >
                   Edit
                 </button>
@@ -86,7 +96,10 @@ const Home = (props) => {
         className="btn btn-primary"
         style={{ float: "right", marginTop: "5px" }}
         onClick={() => {
-          props.history.push({pathname : "/addEmployee", employeeData});
+          props.history.push({
+            pathname: "/addEmployee",
+            employeeData
+          });
         }}
       >
         Add New Employee
